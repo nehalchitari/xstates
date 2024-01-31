@@ -12,29 +12,53 @@ function LocationSelector() {
 
   useEffect(() => {
     async function fetchCountries() {
-      const response = await fetch(
-        "https://crio-location-selector.onrender.com/countries"
-      );
-      const data = await response.json();
-      setCountries(data);
+      try {
+        const response = await fetch(
+          "https://crio-location-selector.onrender.com/countries"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch countries");
+        }
+        const data = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error("Error fetching countries:", error.message);
+        // Handle error gracefully, such as displaying an error message to the user
+      }
     }
     fetchCountries();
   }, []);
 
   async function fetchStates(country) {
-    const response = await fetch(
-      `https://crio-location-selector.onrender.com/country=${country}/states`
-    );
-    const data = await response.json();
-    setStates(data);
+    try {
+      const response = await fetch(
+        `https://crio-location-selector.onrender.com/country=${country}/states`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch states");
+      }
+      const data = await response.json();
+      setStates(data);
+    } catch (error) {
+      console.error("Error fetching states:", error.message);
+      // Handle error gracefully, such as displaying an error message to the user
+    }
   }
 
   async function fetchCities(country, state) {
-    const response = await fetch(
-      `https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`
-    );
-    const data = await response.json();
-    setCities(data);
+    try {
+      const response = await fetch(
+        `https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch cities");
+      }
+      const data = await response.json();
+      setCities(data);
+    } catch (error) {
+      console.error("Error fetching cities:", error.message);
+      // Handle error gracefully, such as displaying an error message to the user
+    }
   }
 
   function handleCountryChange(event) {
@@ -58,11 +82,14 @@ function LocationSelector() {
     const city = event.target.value;
     setSelectedCity(city);
     setLocationText(
-      <p>
-        <strong>You Selected</strong> <span className="city">{city}</span>,{" "}
-        <strong className="state">{selectedState}</strong>,{" "}
-        <strong className="country">{selectedCountry}</strong>
-      </p>
+      selectedCountry && selectedState ? (
+        <p>
+          <strong>You Selected</strong>{" "}
+          <span className="city">{city}</span>,{" "}
+          <strong className="state">{selectedState}</strong>,{" "}
+          <strong className="country">{selectedCountry}</strong>
+        </p>
+      ) : null
     );
   }
 
@@ -84,6 +111,7 @@ function LocationSelector() {
           value={selectedState}
           onChange={handleStateChange}
           disabled={!selectedCountry}
+          className="select-menu"
         >
           <option value="" disabled>
             Select State
@@ -98,6 +126,7 @@ function LocationSelector() {
           value={selectedCity}
           onChange={handleCityChange}
           disabled={!selectedState}
+          className={selectedCity ? "select-menu" : ""}
         >
           <option value="" disabled>
             Select City
