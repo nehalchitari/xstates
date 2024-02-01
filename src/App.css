@@ -1,40 +1,30 @@
-.center {
+.city-selector {
   text-align: center;
+  margin-top: 50px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.dropdown-row {
+.dropdowns {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
   gap: 20px;
 }
 
-select {
-  width: 200px;
+.dropdown {
   padding: 10px;
   font-size: 16px;
-}
-
-strong {
-  font-weight: bold;
-}
-
-.city {
-  font-size: 20px;
 }
 
 .result {
   margin-top: 20px;
   font-size: 18px;
-  font-weight: bold;
 }
 
-.bold {
+.highlight {
   font-weight: bold;
-  color: gray;
+  font-size: 24px;
 }
 
-.bolder {
-  font-weight: bolder;
-  font-size: 25px;
+.fade {
+  color: #888;
 }
